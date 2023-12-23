@@ -15,8 +15,8 @@ const App: React.FC = () => {
 
     //componentDidMount
     useEffect(() => {
-        connect((msg: string) => {
-            console.log("New message");
+        connect((msg: Object) => {
+            console.log("New message: " + msg);
             setState((prevState => ({
                 ...prevState,
                 chatHistory: [...prevState.chatHistory, msg]

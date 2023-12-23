@@ -1,3 +1,4 @@
+// ChatHistory.tsx
 import React, { FC } from 'react';
 import './ChatHistory.scss';
 import Message from '../Message/Message';
@@ -11,18 +12,15 @@ interface Message {
   data: string;
 }
 
-const ChatHistory: FC<ChatHistoryProps> = ({ chatHistory }) => {
-  const renderMessages = () => {
-    return chatHistory.map(({ timeStamp, data }, index) => {
-      const { Body } = JSON.parse(data);
-      return <p key={timeStamp}>{Body}</p>;
-    });
-  };
-
+const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
   return (
     <div className='ChatHistory'>
       <h2>Chat History</h2>
-      <div>{renderMessages()}</div>
+      <div>{chatHistory.map(({ timeStamp, data }, index) => {
+        const { Body } = JSON.parse(data);
+        console.log(data);
+        return <Message message={Body}></Message>})}
+      </div>
     </div>
   );
 };

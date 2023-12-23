@@ -17,6 +17,7 @@ type Client struct{
 
 type Message struct{
 	Type int `json: "type"`
+	User string `json: "user`
 	Body string `json: "body`
 }
 
@@ -34,6 +35,7 @@ func(c *Client) Read(){
 		}
 		message := Message{
 			Type: messageType,
+			User: string(p),
 			Body: string(p),
 		}
 		c.Pool.Broadcast <- message
