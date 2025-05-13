@@ -1,36 +1,38 @@
-
 package websocket
 
 import (
-	"github.com/gorilla/websocket"
 	"fmt"
-	"sync"
 	"log"
+	"sync"
+
+	"github.com/gorilla/websocket"
 )
 
-type Client struct{
-	ID string		
-	Conn *websocket.Conn
-	Pool *Pool
+type Client struct {
+	ID    string
+	Conn  *websocket.Conn
+	Pool  *Pool
 	mutex sync.Mutex
 }
 
-type Message struct{
-	Type int `json: "type"`
+type Message struct {
+	Type int    `json: "type"`
 	User string `json: "user`
 	Body string `json: "body`
 }
 
-func(c *Client) Read(){
-	defer func(){
+func (c *Client) Read() {
+	defer func() {
+		fmt.Println("Unregistering")
 		c.Pool.Unregister <- c
 		c.Conn.Close()
 	}()
-	
-	for{
+
+	for {
 		messageType, p, err := c.Conn.ReadMessage()
-		if err != nil{
+		if err != nil {
 			log.Println(err)
+			// We break the loop since an eror was encountered
 			return
 		}
 		message := Message{
