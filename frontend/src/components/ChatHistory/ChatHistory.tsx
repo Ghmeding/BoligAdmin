@@ -2,15 +2,7 @@
 import React, { FC } from 'react';
 import './ChatHistory.scss';
 import Message from '../Message/Message';
-
-interface ChatHistoryProps {
-  chatHistory: Message[];
-}
-
-interface Message {
-  timeStamp: number;
-  data: string;
-}
+import { ChatHistoryProps } from '../../models/message';
 
 const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
   return (
@@ -18,6 +10,7 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
       <h2>Chat History</h2>
       <div>{chatHistory.map(({ timeStamp, data }, index) => {
         const { Body } = JSON.parse(data);
+        console.log("test");
         console.log(data);
         return <Message message={Body}></Message>})}
       </div>
