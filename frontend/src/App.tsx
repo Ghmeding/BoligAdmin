@@ -1,8 +1,9 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header/Header';
 import ChatHistory from './components/ChatHistory/ChatHistory';
 import ChatInput from './components/ChatInput/ChatInput';
 import {connect, sendMsg} from './api';
+import { Message } from './models/message';
 
 interface AppState{
     chatHistory: any[];
@@ -15,7 +16,7 @@ const App: React.FC = () => {
 
     //componentDidMount
     useEffect(() => {
-        connect((msg: Object) => {
+        connect((msg: Message) => {;
             console.log("New message: " + msg);
             setState((prevState => ({
                 ...prevState,

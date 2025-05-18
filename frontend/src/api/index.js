@@ -1,4 +1,4 @@
-var socket = new WebSocket('ws://localhost:9000/ws');
+var socket = new WebSocket('ws://localhost:9000/chatService');
 
 let connect = (cb) => {
   console.log("connecting")
