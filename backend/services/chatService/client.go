@@ -1,18 +1,16 @@
-package websocket
+package chatService
 
 import (
 	"fmt"
 	"log"
-	"sync"
 
 	"github.com/gorilla/websocket"
 )
 
 type Client struct {
-	ID    string
-	Conn  *websocket.Conn
-	Pool  *Pool
-	mutex sync.Mutex
+	ID   string
+	Conn *websocket.Conn
+	Pool *Pool
 }
 
 type Message struct {
