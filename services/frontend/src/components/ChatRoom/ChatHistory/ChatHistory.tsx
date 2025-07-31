@@ -2,7 +2,8 @@
 import React, { FC } from 'react';
 import './ChatHistory.scss';
 import Message from '../Message/Message';
-import { ChatHistoryProps } from '../../models/message';
+import { ChatHistoryProps } from '../../../models/message';
+
 
 const ChatHistory: React.FC<ChatHistoryProps> = ({ chatHistory }) => {
   return (
