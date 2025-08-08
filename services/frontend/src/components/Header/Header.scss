@@ -1,13 +1,29 @@
 .header {
-    background-color: #2940D3;
-    color: #FFEDA3;
-    max-width: 100%;
-    padding: 50px;
-    h2 {
-      margin: 0;
-      padding: 0;
-      font-size: 4em;
-      text-align : center;
-    }
-  
-  }
+  background-color: #2940D3;
+  color: #FFEDA3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 20px;
+  flex: 1;
+  text-align: center;
+}
+
+.header button {
+  background: transparent;
+  border: 1px solid #FFEDA3;
+  color: #FFEDA3;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.header button:hover {
+  background-color: #FFEDA3;
+  color: #2940D3;
+}
