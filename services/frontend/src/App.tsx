@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
-import Header from './components/Header/Header';
-import { ChatRoom } from './components/ChatRoom/ChatRoom';
-
-interface AppState {
-    page: string
-}
+import React from "react";
+import { Home } from "./components/Home/Home";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import Verify from "./components/Verify/Verify";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 const App: React.FC = () => {
-    const [appState, setAppState] = useState<AppState>({
-        page: "Home",
-    });
-
-    const [showChatRoom, setShowChatRoom] = useState(false);
-    
-    const handleClick = () => {
-        setShowChatRoom(true);
-    }
-
-    return(
-        <div className='App'>
-            <Header header={appState.page}></Header>
-            <button onClick={handleClick}>
-                Go to chat room!
-            </button>
-            {showChatRoom && <ChatRoom></ChatRoom>}
-        </div>
-    );
-}   
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Navigate
+            to="/home"
+            replace
+          />
+        }
+      />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
+      <Route
+        path="/register"
+        element={<Register />}
+      />
+      <Route
+        path="/verify"
+        element={<Verify />}
+      />
+      <Route
+        path="/home"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+};
 
 export default App;
