@@ -8,9 +8,8 @@ export class EcrStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
-
         // Create the ECR repository for Auth
-        this.authEcrRepository = new Repository(this, 'NexusRepository', {
+        this.authEcrRepository = new Repository(this, 'AuthRepository', {
             repositoryName: 'auth',
             imageScanOnPush: true,
             encryption: RepositoryEncryption.KMS

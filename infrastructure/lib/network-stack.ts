@@ -1,9 +1,11 @@
 import { Stack, StackProps, CfnOutput } from 'aws-cdk-lib';
+import { VpcLink } from 'aws-cdk-lib/aws-apigatewayv2';
 import { SubnetType, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 
 export class NetworkStack extends Stack {
   public readonly vpc: Vpc;
+  public readonly vpcLink: VpcLink;
 
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -26,6 +28,10 @@ export class NetworkStack extends Stack {
             subnetType: SubnetType.PRIVATE_ISOLATED
         }
       ]
+    });
+
+    this.vpcLink = new VpcLink(this, 'AlbVpcLink', {
+      vpc: this.vpc
     });
 
     // Output the VPC ID for cross-stack references

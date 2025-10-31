@@ -18,19 +18,6 @@ export class RdsStack extends Stack {
         const port = 5432;
         const dbName = "BA_DB";
 
-        // create database master user secret and store it in Secrets Manager
-        const masterUserSecret = new Secret(this, "BA_DB_SECRET", {
-            secretName: "BA_DB_SECRET",
-            description: "BA_DB_SECRET",
-            secretStringValue: SecretValue.unsafePlainText(JSON.stringify({
-                SPRING_DATASOURCE_URL: process.env.SPRING_DATASOURCE_URL,
-                SPRING_DATASOURCE_USERNAME: process.env.SPRING_DATASOURCE_USERNAME,
-                JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
-                SUPPORT_EMAIL: process.env.SUPPORT_EMAIL,
-                APP_PASSWORD: process.env.APP_PASSWORD
-            }))
-        });
-
         const dbSg = new SecurityGroup(this, 'RdsSecurityGroup', {
             securityGroupName: "BA_DB_SG",
             vpc: vpc
@@ -44,7 +31,7 @@ export class RdsStack extends Stack {
         );
 
         // create RDS instance (PostgreSQL)
-        const db = new DatabaseInstance(this, "DB-1", {
+        const db = new DatabaseInstance(this, "userAuth", {
             vpc: vpc,
             vpcSubnets: { subnetType: SubnetType.PRIVATE_ISOLATED },
             instanceType,
@@ -52,7 +39,7 @@ export class RdsStack extends Stack {
             port,
             securityGroups: [dbSg],
             databaseName: dbName,
-            credentials: Credentials.fromSecret(masterUserSecret),
+            credentials: Credentials.fromGeneratedSecret('ba_admin'),
             backupRetention: Duration.days(0),
             deleteAutomatedBackups: true,
             removalPolicy: RemovalPolicy.DESTROY

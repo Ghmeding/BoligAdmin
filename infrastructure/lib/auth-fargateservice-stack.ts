@@ -1,4 +1,4 @@
-import { Duration, Stack, StackProps }  from 'aws-cdk-lib';
+import { Duration, Fn, Stack, StackProps }  from 'aws-cdk-lib';
 import { ContainerImage, FargateService, FargateTaskDefinition, LogDrivers, ICluster } from 'aws-cdk-lib/aws-ecs';
 import { IApplicationLoadBalancer, IApplicationTargetGroup } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import { IRepository } from 'aws-cdk-lib/aws-ecr';
@@ -20,6 +20,8 @@ export interface AuthFargateServiceProps extends StackProps {
 export class AuthFargateServiceStack extends Stack {
     constructor(scope: Construct, id: string, props: AuthFargateServiceProps) {
         super(scope, id, props);
+
+        const dbEndpoint = Fn.importValue("BA_DB_ENDPOINT");
 
         const cluster = props.cluster;
         const vpc = props.vpc;
@@ -68,12 +70,12 @@ export class AuthFargateServiceStack extends Stack {
             cpu: 256,
             //TODO: insert secrets dynamically
             environment: {
-                SPRING_DATASOURCE_URL: "",
-                SPRING_DATASOURCE_USERNAME: "",
-                SPRING_DATASOURCE_PASSWORD: "",
-                JWT_SECRET_KEY: "",
-                SUPPORT_EMAIL: "",
-                APP_PASSWORD: ""
+                SPRING_DATASOURCE_URL: dbEndpoint,
+                SPRING_DATASOURCE_USERNAME: process.env.SPRING_DATASOURCE_USERNAME || "",
+                SPRING_DATASOURCE_PASSWORD: process.env.SPRING_DATASOURCE_PASSWORD || "",
+                JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || "",
+                SUPPORT_EMAIL: process.env.SUPPORT_EMAIL || "",
+                APP_PASSWORD: process.env.APP_PASSWORD || ""
             },
             healthCheck: {
                 command: [
