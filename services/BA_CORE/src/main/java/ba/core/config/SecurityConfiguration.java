@@ -1,4 +1,4 @@
-package BA_CORE.config;
+package ba.core.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class SecurityConfiguration {
         http
                 .csrf(CsrfConfigurer<HttpSecurity>::disable)
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/health/**").permitAll()
+                        .requestMatchers("/property/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

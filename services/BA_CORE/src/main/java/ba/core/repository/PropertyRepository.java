@@ -1,6 +1,6 @@
-package BA_CORE.repository;
+package ba.core.repository;
 
-import BA_CORE.models.Property;
+import ba.core.models.Property;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

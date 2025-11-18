@@ -1,4 +1,4 @@
-package BA_CORE.models;
+package ba.core.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ public class Property {
     private String id;
 
     @Column(nullable = false)
-    private String owner_id;
+    private String ownerId;
 
     @Column
     private String title;
@@ -40,8 +40,8 @@ public class Property {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Property(String owner_id, String title, String address, String city, String postalCode, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.owner_id = owner_id;
+    public Property(String ownerId, String title, String address, String city, String postalCode, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.ownerId = ownerId;
         this.title = title;
         this.address = address;
         this.city = city;
@@ -49,5 +49,7 @@ public class Property {
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+    public Property() {
     }
 }
