@@ -1,4 +1,4 @@
-package BA_CORE.config;
+package ba.core.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
