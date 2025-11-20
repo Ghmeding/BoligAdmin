@@ -1,13 +1,26 @@
-# ChatApp
-Chat application using Golang as backend React TypeScript
+# BoligAdmin
 
-## How to init and run
-First clone project (git clone...)
-Then, run 'npm install' to install all dependencies
-Next, navigate to ./backend and run 'go run main.go' to start the server
+BoligAdmin is an application designed to help manage property administration tasks efficiently.
 
-Next, navigate to ./frontend and run 'npm start' to the frontend-client. 
-This should open a tab in the preferred browser at localhost:3000. 
-To run multiple clients at a time, simply open another tab and go to localhost:3000.
+## Features
 
-Happy chatting!
+- Property management
+- Tenant tracking
+- Lease management
+- Payment and invoice handling
+
+## Getting Started
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/BoligAdmin.git
+    ```
+2. Follow the setup instructions in the `docs/` directory.
+
+## Contributing
+
+Contributions are welcome! Please open issues or submit pull requests.
+
+## License
+
+This project is licensed under the MIT License.
