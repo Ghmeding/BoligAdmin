@@ -1,14 +1,18 @@
 package ba.core.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name= "property")
@@ -25,11 +29,6 @@ public class Property {
 
     @Column
     private String title;
-    private String address;
-    private String city;
-
-    @Column(name = "postal_code")
-    private String postalCode;
 
     @Column
     private String description;
@@ -40,13 +39,20 @@ public class Property {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Property(String ownerId, String title, String address, String city, String postalCode, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Apartment> apartments = new ArrayList<>();
+
+    public Property(
+            String ownerId,
+            String title,
+            String description,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+    ) {
         this.ownerId = ownerId;
         this.title = title;
-        this.address = address;
-        this.city = city;
-        this.postalCode = postalCode;
         this.description = description;
+        this.apartments = new ArrayList<>();
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
