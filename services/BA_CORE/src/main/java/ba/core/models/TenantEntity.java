@@ -16,21 +16,20 @@ import lombok.Setter;
 @Table(name = "tenant")
 @Getter
 @Setter
-public class Tenant {
+public class TenantEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @OneToOne (fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "apartment_id",
-            referencedColumnName = "id",
-            nullable = false
-    )
-    private Apartment apartment;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "property_id", referencedColumnName = "id", nullable = false)
+    private PropertyEntity property;
 
-    @Column
+    @Column(nullable = false)
     private String email;
+
+   @Column(nullable = false)
+   private String fullName;
 
     @Column
     private String lastEmailedAt;

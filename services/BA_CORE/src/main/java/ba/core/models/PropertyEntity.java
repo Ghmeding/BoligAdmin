@@ -3,22 +3,21 @@ package ba.core.models;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name= "property")
 @Getter
 @Setter
-public class Property {
+public class PropertyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,35 +26,43 @@ public class Property {
     @Column(nullable = false)
     private String ownerId;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private String description;
 
-    @Column(name = "created_at")
+    @Column(nullable = false)
+    private String address;
+
+    @Column(name = "monthly_rent", nullable = false)
+    private Float monthlyRent;
+
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Apartment> apartments = new ArrayList<>();
+    @OneToOne(mappedBy = "property", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private TenantEntity tenant;
 
-    public Property(
+    public PropertyEntity(
             String ownerId,
             String title,
             String description,
+            String address,
+            Float monthlyRent,
             LocalDateTime createdAt,
             LocalDateTime updatedAt
     ) {
         this.ownerId = ownerId;
         this.title = title;
         this.description = description;
-        this.apartments = new ArrayList<>();
+        this.address = address;
+        this.monthlyRent = monthlyRent;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-    public Property() {
-    }
+    public PropertyEntity() {}
 }

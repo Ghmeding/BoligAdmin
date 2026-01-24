@@ -1,11 +1,13 @@
 package ba.core.service;
 
-import ba.core.dto.CreatePropertyDto;
-import ba.core.models.Property;
+import ba.core.dto.CreatePropertyDTO;
+import ba.core.exception.PropertyException;
+import ba.core.mapper.PropertyMapper;
+import ba.core.models.PropertyEntity;
 import ba.core.repository.PropertyRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +22,10 @@ public class PropertyService {
 
     /**
      * Retrieves all properties stored in the system database.
-     * @return a list of all {@link Property} entities
+     * @return a list of all {@link PropertyEntity} entities
      */
-    public List<Property> getAllProperties(){
-        List<Property> properties = new ArrayList<>();
+    public List<PropertyEntity> getAllProperties(){
+        List<PropertyEntity> properties = new ArrayList<>();
         propertyRepository.findAll().forEach(properties::add);
         return properties;
     }
@@ -33,7 +35,7 @@ public class PropertyService {
      * @param ownerId the unique identifier of the property owner
      * @return a list of properties associated with the given owner
      */
-    public List<Property> getAllOwnerProperties(String ownerId) {
+    public List<PropertyEntity> getAllOwnerProperties(String ownerId) {
         return propertyRepository.findByOwnerId(ownerId);
     }
 
@@ -43,15 +45,17 @@ public class PropertyService {
      * @param ownerId the identifier of the owner creating the property
      * @return a status string indicating the result of the operation
      */
-    public String createProperty(CreatePropertyDto input, String ownerId){
-        Property property = new Property(
-                ownerId,
-                input.getTitle(),
-                input.getDescription(),
-                LocalDateTime.now(),
-                LocalDateTime.now()
-        );
-        propertyRepository.save(property);
-        return "test";
+    @Transactional
+    public String createProperty(CreatePropertyDTO input, String ownerId){
+        try {
+            PropertyEntity newPropertyEntity = propertyRepository.save(PropertyMapper.convertToEntity(input, ownerId));
+            return newPropertyEntity.getId();
+        } catch (Exception e) {
+            throw new PropertyException(e.getMessage());
+        }
+    }
+
+    public void setPropertyMonthlyRent(PropertyEntity property, Float monthlyRent){
+
     }
 }

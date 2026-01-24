@@ -33,6 +33,8 @@ public class SecurityConfiguration {
                 .csrf(CsrfConfigurer<HttpSecurity>::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/health/**").permitAll()
+                        .requestMatchers("/property/**").permitAll()
+                        .requestMatchers("/tenant/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
